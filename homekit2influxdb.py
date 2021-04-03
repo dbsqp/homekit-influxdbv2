@@ -46,14 +46,6 @@ influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "Developement")
 
 
 # hard encoded envionment varables
-homekit_ip_list=['10.0.0.149', '10.0.0.148', '10.0.0.147']
-homekit_host_list=['En-Suite', 'Hallway', 'Bathroom']
-influxdb2_host="10.0.0.10"
-influxdb2_port="8086"
-influxdb2_org="Home"
-influxdb2_token="SbfFAjZxi1v2mYno0VvVPkXXXJju8LRQ99MJ77l73FfgIMaSxuK_nVG1wpPcnMF7KAnZ4c-dMqpkSTr4F2I78w=="
-influxdb2_bucket="DEV4"
-debug=True
 
 
 # report debug status
