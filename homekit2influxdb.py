@@ -10,7 +10,8 @@ import os
 import sys
 import requests
 from getmac import get_mac_address
-import subprocess, platform
+import subprocess
+import platform
 
 
 # function ping test
