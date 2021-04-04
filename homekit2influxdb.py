@@ -24,13 +24,19 @@ def pingTest(pingHost):
 
 
 # debug enviroment variables
-domac = False
 showraw = False
 debug_str=os.getenv("DEBUG", None)
 if debug_str is not None:
   debug = debug_str.lower() == "true"
 else:
   debug = False
+
+# getmac enviroment variables
+getmac_str=os.getenv("GETMAC", None)
+if getmac_str is not None:
+  getmac = getmac_str.lower() == "true"
+else:
+  getmac = False
 
 
 # HomeKit envionment variables
@@ -51,11 +57,16 @@ influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "Developement")
 # hard encoded envionment varables
 
 
-# report debug status
+# report debug/domac status
 if debug:
     print ( " debug: TRUE" )
 else:
     print ( " debug: FALSE" )
+
+if getmac:
+    print ( "getmac: TRUE" )
+else:
+    print ( "getmac: FALSE" )
 
 
 # influxDBv2
@@ -115,7 +126,7 @@ for ipaddress in homekit_ip_list:
         continue
 
     # get MAC
-    if domac:
+    if getmac:
         mac = get_mac_address(ip=ipaddress)
         if debug:
             print ("   MAC: "+mac)
@@ -134,7 +145,7 @@ for ipaddress in homekit_ip_list:
         senddata["tags"]={}
         senddata["tags"]["source"]="HomeKit"
         senddata["tags"]["host"]=host
-        if domac:
+        if getmac:
             senddata["tags"]["module"]=mac
         senddata["fields"]={}
         senddata["fields"]["value"]=value
