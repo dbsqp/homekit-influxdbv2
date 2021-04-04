@@ -7,7 +7,7 @@ Fetch data from LAN HomeKit accessories via REST API and push to influxdb v2 buc
 - Create list of rooms (mapped to hosts in Influx): ['Room1','Room2', ...]
 
 ## InfluxDBv2 Setup
-Setup InfluxDBv2, create bucket and create a token with write permissions for said bucket.
+Setup InfluxDBv2, create bucket and create a token with write permissions for bucket.
 
 ## Docker Setup
 ```
