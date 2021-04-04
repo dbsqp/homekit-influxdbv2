@@ -5,7 +5,7 @@ on:
     branches: master
 
 jobs:
-    build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -22,4 +22,3 @@ jobs:
           docker buildx build --push \
             --tag dbsqp/homekit-influxdbv2:latest \
             --platform linux/amd64,linux/arm64 .
-
