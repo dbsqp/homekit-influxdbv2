@@ -24,7 +24,7 @@ def pingTest(pingHost):
 
 
 # debug enviroment variables
-domac = True
+domac = False
 showraw = False
 debug_str=os.getenv("DEBUG", None)
 if debug_str is not None:
