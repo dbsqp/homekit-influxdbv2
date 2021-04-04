@@ -3,8 +3,8 @@ Fetch data from Local HomeKit REST API and push to influxdb v2 bucket.
 
 ## HomeKit Accessories
 - Get IP address of temperature/humidity sensors
-- Create list of IPs: ['<IP1>','<IP2>'...]
-- Create list of rooms (mapped to hosts in Influx): ['<Room1>','<Room2>'...]
+- Create list of IPs: ['IP1','IP2', ...]
+- Create list of rooms (mapped to hosts in Influx): ['Room1','Room2', ...]
 
 ## InfluxDBv2 Setup
 Setup InfluxDBv2, create bucket and create a token with write permissions for said bucket.
