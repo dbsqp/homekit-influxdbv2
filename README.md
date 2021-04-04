@@ -26,5 +26,13 @@ dbsqp/homekit-influxdbv2:latest
 ## Debug
 To report out further details in the log enable debug:
 ```
- -e DEBUG="true"
+ -e DEBUG="TRUE"
 ```
+
+## Get MAC
+To report out MAC address in module tag enable getmac. Note docker container network needs to be exposed at host level:
+```
+-e GETMAC="TRUE" \
+--network host \
+```
+
