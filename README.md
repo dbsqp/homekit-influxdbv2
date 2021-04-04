@@ -33,6 +33,6 @@ To report out further details in the log enable debug:
 To report out MAC address in module tag enable getmac. Note docker container network needs to be exposed at host level:
 ```
 -e GETMAC="TRUE" \
---network host \
+--network host
 ```
 
