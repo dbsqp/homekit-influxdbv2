@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Docker Hub Description
-        uses: dbsqp/homekit-influxdbv2@v1
+        uses: dbsqp/homekit-influxdbv2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
