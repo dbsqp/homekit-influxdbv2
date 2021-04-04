@@ -153,3 +153,5 @@ for ipaddress in homekit_ip_list:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
         write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
+
+	
