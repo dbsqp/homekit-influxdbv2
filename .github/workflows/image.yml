@@ -13,8 +13,8 @@ jobs:
       - name: Docker Hub Description
         uses: dbsqp/homekit-influxdbv2@master
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dbsqp/homekit-influxdbv2@latest
           short-description: ${{ github.event.repository.description }}
   build:
