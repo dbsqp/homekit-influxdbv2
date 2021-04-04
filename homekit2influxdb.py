@@ -34,8 +34,8 @@ else:
 
 
 # HomeKit envionment variables
-homekit_ip_list=os.getenv('HOMEKIT_IP_LIST', "")
-homekit_host_list=os.getenv('HOMEKIT_HOST_LIST', "")
+homekit_ip_list=eval(os.getenv('HOMEKIT_IP_LIST', ""))
+homekit_host_list=eval(os.getenv('HOMEKIT_HOST_LIST', ""))
 
 
 # influxDBv2 envionment variables
