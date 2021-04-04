@@ -1,5 +1,5 @@
 # homekit-influxdbv2
-Fetch data from Local HomeKit REST API and push to influxdb v2 bucket.
+Fetch data from LAN HomeKit accessories via REST API and push to influxdb v2 bucket.
 
 ## HomeKit Accessories
 - Get IP address of temperature/humidity sensors
