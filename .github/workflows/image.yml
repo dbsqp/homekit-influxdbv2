@@ -5,11 +5,11 @@ on:
     branches: master
 
 jobs:
-  dockerHubDescription:
+    build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
+      - name: checkout code
+        uses: actions/checkout@v2
       - name: Docker Hub Description
         uses: dbsqp/homekit-influxdbv2@master
         with:
@@ -17,11 +17,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dbsqp/homekit-influxdbv2@latest
           short-description: ${{ github.event.repository.description }}
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v2
       - name: install buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
