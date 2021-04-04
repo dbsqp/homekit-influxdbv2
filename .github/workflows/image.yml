@@ -8,15 +8,15 @@ jobs:
   dockerHubDescription:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Docker Hub Description
-      uses: dbsqp/homekit-influxdbv2@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        repository: dbsqp/homekit-influxdbv2
-        short-description: ${{ github.event.repository.description }}
+      - name: Docker Hub Description
+        uses: dbsqp/homekit-influxdbv2@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: dbsqp/homekit-influxdbv2
+          short-description: ${{ github.event.repository.description }}
   build:
     runs-on: ubuntu-latest
     steps:
