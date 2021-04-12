@@ -49,9 +49,9 @@ homekit_host_list=eval(homekit_host_list_str)
 # influxDBv2 envionment variables
 influxdb2_host=os.getenv('INFLUXDB2_HOST', "localhost")
 influxdb2_port=int(os.getenv('INFLUXDB2_PORT', "8086"))
-influxdb2_org=os.getenv('INFLUXDB2_ORG', "org")
+influxdb2_org=os.getenv('INFLUXDB2_ORG', "Home")
 influxdb2_token=os.getenv('INFLUXDB2_TOKEN', "token")
-influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "Developement")
+influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "DEV")
 
 
 # hard encoded envionment varables
@@ -146,7 +146,7 @@ for ipaddress in homekit_ip_list:
         senddata["tags"]["source"]="HomeKit"
         senddata["tags"]["host"]=host
         if getmac:
-            senddata["tags"]["module"]=mac
+            senddata["tags"]["hardware"]=mac
         senddata["fields"]={}
         senddata["fields"]["value"]=value
         if debug:
