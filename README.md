@@ -33,9 +33,11 @@ To report out further details in the log enable debug:
 ```
 
 ## Get MAC
-To read MAC address via ARP enable getmac. Not possible if docker and devices are on different subnets. Use HOMEKIT_MAC_LIST for manual override. Note docker container network needs to at host level:
+To read MAC address via ARP enable getmac. Note docker container network needs to at host level:
 ```
 -e GETMAC="TRUE" \
 --network host
+```
+Note not possible if docker and devices are on different subnets. Use HOMEKIT_MAC_LIST for manual override. 
 ```
 
