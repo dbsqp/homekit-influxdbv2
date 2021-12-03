@@ -5,6 +5,8 @@ Fetch data from LAN HomeKit accessories via REST API and push to influxdb v2 buc
 - Get IP address of temperature/humidity sensors
 - Create list of IPs: ['IP1','IP2', ...]
 - Create list of rooms (mapped to hosts in Influx): ['Room1','Room2', ...]
+- Create list of mac addresses (mapped to hardware in Influx): ['MAC1','MAC2', ...] (optional)
+
 
 ## InfluxDBv2 Setup
 Setup InfluxDBv2, create bucket and create a token with write permissions for bucket.
@@ -14,6 +16,7 @@ Setup InfluxDBv2, create bucket and create a token with write permissions for bu
 $ docker run -d \
  -e HOMEKIT_IP_LIST="['<IP1>','<IP2>',...]" \
  -e HOMEKIT_HOST_LIST="['<Room1>','<Room2>',...]" \
+ -e HOMEKIT_MAC_LIST="['<MAC1>','<MAC2>',...]" \
  -e INFLUXDB2_HOST="<INFLUXDBv2 SERVER>" \
  -e INFLUXDB2_PORT="8086" \
  -e INFLUXDB2_ORG="Home" \
@@ -30,7 +33,7 @@ To report out further details in the log enable debug:
 ```
 
 ## Get MAC
-To report out MAC address in module tag enable getmac. Note docker container network needs to at host level:
+To read MAC address via ARP enable getmac. Not possible if docker and devices are on different subnets. Use HOMEKIT_MAC_LIST for manual override. Note docker container network needs to at host level:
 ```
 -e GETMAC="TRUE" \
 --network host
