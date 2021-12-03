@@ -150,8 +150,7 @@ for ipaddress in homekit_ip_list:
         senddata["tags"]={}
         senddata["tags"]["source"]="HomeKit"
         senddata["tags"]["host"]=host
-        if getmac:
-            senddata["tags"]["hardware"]=mac
+        senddata["tags"]["hardware"]=mac
         senddata["fields"]={}
         senddata["fields"]["value"]=value
         if debug:
