@@ -39,5 +39,4 @@ To read MAC address via ARP enable getmac. Note docker container network needs t
 --network host
 ```
 Note not possible if docker and devices are on different subnets. Use HOMEKIT_MAC_LIST for manual override. 
-```
 
