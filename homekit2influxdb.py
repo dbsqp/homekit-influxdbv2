@@ -166,14 +166,13 @@ for ipaddress in homekit_ip_list:
 
     if homekit_add_list[position] != "":
         value=ds['accessories'][1]['services'][3]['characteristics'][0]['value']
-    	host=homekit_add_list[position][0]
-
-	if homekit_add_list[position][1] == "Temperature":
-        	value=float(round(value,1))
+        host=homekit_add_list[position][0]
+        if homekit_add_list[position][1] == "Temperature":
+            value=float(round(value,1))
         else:
-        	value=int(value)
-	
-	senddata={}
+             value=int(value)
+
+        senddata={}
         senddata["measurement"]=[position][1]
         senddata["tags"]={}
         senddata["tags"]["source"]="HomeKit"
