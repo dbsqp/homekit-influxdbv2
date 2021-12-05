@@ -164,7 +164,7 @@ for ipaddress in homekit_ip_list:
 	if homekit_add_list[position] != "":
 		if debug:
 			print ("ADD: "+homekit_add_list[position][0]+" - "+homekit_add_list[position][1])
-		value=ds['accessories'][1]['services'][3]['characteristics'][0]['value']
+		value=ds['accessories'][2]['services'][1]['characteristics'][0]['value']
 		if homekit_add_list[position][1] == "Temperature":
 			value=float(round(value,1))
 		else:
