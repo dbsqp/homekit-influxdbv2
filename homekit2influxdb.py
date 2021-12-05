@@ -161,22 +161,20 @@ for ipaddress in homekit_ip_list:
 		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
 	# do additional sensor
-	if debug:
-		print ("ADD: "+homekit_add_list[position][1])
-
 	if homekit_add_list[position] != "":
+		if debug:
+			print ("ADD: "+homekit_add_list[position][0]+" - "+homekit_add_list[position][1])
 		value=ds['accessories'][1]['services'][3]['characteristics'][0]['value']
-		host=homekit_add_list[position][0]
 		if homekit_add_list[position][1] == "Temperature":
 			value=float(round(value,1))
 		else:
 			value=int(value)
 
 		senddata={}
-		senddata["measurement"]=[position][1]
+		senddata["measurement"]=homekit_add_list[position][1]
 		senddata["tags"]={}
 		senddata["tags"]["source"]="HomeKit"
-		senddata["tags"]["host"]=host
+		senddata["tags"]["host"]=homekit_add_list[position][0]
 		senddata["tags"]["hardware"]=mac
 		senddata["fields"]={}
 		senddata["fields"]["value"]=value
@@ -184,3 +182,7 @@ for ipaddress in homekit_ip_list:
 			print ("INFLUX: "+influxdb2_bucket)
 			print (json.dumps(senddata,indent=4))
 		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
+	else:
+		if debug:
+			print ("ADD: NULL")
+		
