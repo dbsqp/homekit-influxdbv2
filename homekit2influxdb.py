@@ -161,7 +161,7 @@ for ipaddress in homekit_ip_list:
 		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
 	# do additional sensor
-    if debug:
+	if debug:
 		print ("ADD: "+homekit_add_list[position])
 
 	if homekit_add_list[position] != "":
