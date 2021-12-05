@@ -16,27 +16,27 @@ import platform
 
 # function ping test
 def pingTest(pingHost):
-    try:
-        output = subprocess.check_output("ping -{} 1 {}".format('n' if platform.system().lower()=="windows" else 'c', pingHost), shell=True)#    except Exception as e:
-    except Exception as e:
-	    return False
-    return True
+	try:
+		output = subprocess.check_output("ping -{} 1 {}".format('n' if platform.system().lower()=="windows" else 'c', pingHost), shell=True)#    except Exception as e:
+	except Exception as e:
+		return False
+	return True
 
 
 # debug enviroment variables
 showraw = False
 debug_str=os.getenv("DEBUG", None)
 if debug_str is not None:
-  debug = debug_str.lower() == "true"
+	debug = debug_str.lower() == "true"
 else:
-  debug = False
+	debug = False
 
 # getmac enviroment variables
 getmac_str=os.getenv("GETMAC", None)
 if getmac_str is not None:
-  getmac = getmac_str.lower() == "true"
+	getmac = getmac_str.lower() == "true"
 else:
-  getmac = False
+	getmac = False
 
 
 # HomeKit envionment variables
@@ -64,21 +64,21 @@ influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "DEV")
 
 # report debug/domac status
 if debug:
-    print ( " debug: TRUE" )
+	print ( " debug: TRUE" )
 else:
-    print ( " debug: FALSE" )
+	print ( " debug: FALSE" )
 
 if getmac:
-    print ( "getmac: TRUE" )
+	print ( "getmac: TRUE" )
 else:
-    print ( "getmac: FALSE" )
+	print ( "getmac: FALSE" )
 
 
 # influxDBv2
 influxdb2_url="http://" + influxdb2_host + ":" + str(influxdb2_port)
 if debug:
-    print ( "influx: "+influxdb2_url )
-    print ( "bucket: "+influxdb2_bucket )
+	print ( "influx: "+influxdb2_url )
+	print ( "bucket: "+influxdb2_bucket )
 
 client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org)
 write_api = client.write_api(write_options=SYNCHRONOUS)
@@ -90,97 +90,97 @@ sensorList=['Temperature','Humidity']
 
 # pass data to InfluxDB
 for ipaddress in homekit_ip_list:
-    senddata={}
+	senddata={}
 
-    time = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ") 
+	time = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ") 
 
-    # get host name
-    position = homekit_ip_list.index(ipaddress)
-    host=homekit_host_list[position]
-    if debug:
-        print ("\nSensor: "+host+" - "+ipaddress)
+	# get host name
+	position = homekit_ip_list.index(ipaddress)
+	host=homekit_host_list[position]
+	if debug:
+		print ("\nSensor: "+host+" - "+ipaddress)
 
-    # test if host responde to ping
-    if pingTest(ipaddress):
-        if debug:
-            print ("  PING: OK")
-    else:
-        if debug:
-            print ("  PING: NOK")
-        continue
+	# test if host responde to ping
+	if pingTest(ipaddress):
+		if debug:
+			print ("  PING: OK")
+	else:
+		if debug:
+			print ("  PING: NOK")
+		continue
 
-    # get REST API
-    url="http://"+ipaddress+":5556/"
-    try:
-        raw = requests.get(url, timeout=4)
-    except requests.exceptions.Timeout as e: 
-        if debug:
-            print ("   API:",e)
-        continue
+	# get REST API
+	url="http://"+ipaddress+":5556/"
+	try:
+		raw = requests.get(url, timeout=4)
+	except requests.exceptions.Timeout as e: 
+		if debug:
+			print ("   API:",e)
+		continue
 
-    if raw.status_code == requests.codes.ok:
-        if debug:
-            print ("   API: OK ["+str(raw.status_code)+"]")
-        ds = raw.json()
-        if debug and showraw:
-            print ("   RAW:")
-            print (json.dumps(ds,indent=4))
-    else:
-        if debug:
-            print ("   API: NOK")
-        continue
+	if raw.status_code == requests.codes.ok:
+		if debug:
+			print ("   API: OK ["+str(raw.status_code)+"]")
+		ds = raw.json()
+		if debug and showraw:
+			print ("   RAW:")
+			print (json.dumps(ds,indent=4))
+	else:
+		if debug:
+			print ("   API: NOK")
+		continue
 
-    # get MAC
-    if getmac:
-        mac = get_mac_address(ip=ipaddress)
-    else:
-        mac=homekit_mac_list[position]	
-    if debug:
-            print ("   MAC: "+mac)
+	# get MAC
+	if getmac:
+		mac = get_mac_address(ip=ipaddress)
+	else:
+		mac=homekit_mac_list[position]	
+	if debug:
+		print ("   MAC: "+mac)
        
-    # get sensor values
-    for sensor in [0,1]:
-        value=ds['accessories'][1]['services'][sensor+1]['characteristics'][0]['value']
+	# get sensor values
+	for sensor in [0,1]:
+		value=ds['accessories'][1]['services'][sensor+1]['characteristics'][0]['value']
 
-        if sensorList[sensor] == "Temperature":
-        	value=float(round(value,1))
-        else:
-        	value=int(value)
+		if sensorList[sensor] == "Temperature":
+			value=float(round(value,1))
+		else:
+			value=int(value)
         	
-        senddata["measurement"]=sensorList[sensor]
-#        senddata["time"]=time
-        senddata["tags"]={}
-        senddata["tags"]["source"]="HomeKit"
-        senddata["tags"]["host"]=host
-        senddata["tags"]["hardware"]=mac
-        senddata["fields"]={}
-        senddata["fields"]["value"]=value
-        if debug:
-            print ("INFLUX: "+influxdb2_bucket)
-            print (json.dumps(senddata,indent=4))
-        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
+		senddata["measurement"]=sensorList[sensor]
+#		senddata["time"]=time
+		senddata["tags"]={}
+		senddata["tags"]["source"]="HomeKit"
+		senddata["tags"]["host"]=host
+		senddata["tags"]["hardware"]=mac
+		senddata["fields"]={}
+		senddata["fields"]["value"]=value
+		if debug:
+			print ("INFLUX: "+influxdb2_bucket)
+			print (json.dumps(senddata,indent=4))
+		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
-    # do additional sensor
+	# do additional sensor
     if debug:
-        print ("ADD: "+homekit_add_list[position])
+		print ("ADD: "+homekit_add_list[position])
 
-    if homekit_add_list[position] != "":
-        value=ds['accessories'][1]['services'][3]['characteristics'][0]['value']
-        host=homekit_add_list[position][0]
-        if homekit_add_list[position][1] == "Temperature":
-            value=float(round(value,1))
-        else:
-             value=int(value)
+	if homekit_add_list[position] != "":
+		value=ds['accessories'][1]['services'][3]['characteristics'][0]['value']
+		host=homekit_add_list[position][0]
+		if homekit_add_list[position][1] == "Temperature":
+			value=float(round(value,1))
+		else:
+			value=int(value)
 
-        senddata={}
-        senddata["measurement"]=[position][1]
-        senddata["tags"]={}
-        senddata["tags"]["source"]="HomeKit"
-        senddata["tags"]["host"]=host
-        senddata["tags"]["hardware"]=mac
-        senddata["fields"]={}
-        senddata["fields"]["value"]=value
-        if debug:
-            print ("INFLUX: "+influxdb2_bucket)
-            print (json.dumps(senddata,indent=4))
-        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
+		senddata={}
+		senddata["measurement"]=[position][1]
+		senddata["tags"]={}
+		senddata["tags"]["source"]="HomeKit"
+		senddata["tags"]["host"]=host
+		senddata["tags"]["hardware"]=mac
+		senddata["fields"]={}
+		senddata["fields"]["value"]=value
+		if debug:
+			print ("INFLUX: "+influxdb2_bucket)
+			print (json.dumps(senddata,indent=4))
+		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
