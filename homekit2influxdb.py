@@ -162,7 +162,7 @@ for ipaddress in homekit_ip_list:
 
 	# do additional sensor
 	if debug:
-		print ("ADD: "+homekit_add_list[position][0]+" - "+homekit_add_list[position][1])
+		print ("ADD: "+homekit_add_list[position][1])
 
 	if homekit_add_list[position] != "":
 		value=ds['accessories'][1]['services'][3]['characteristics'][0]['value']
