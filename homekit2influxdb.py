@@ -147,7 +147,7 @@ for ipaddress in homekit_ip_list:
 		else:
 			value=int(value)
         	
-		senddata["measurement"]=sensorList[sensor]
+		senddata["measurement"]=sensorList[sensor].lower()
 #		senddata["time"]=time
 		senddata["tags"]={}
 		senddata["tags"]["source"]="HomeKit"
@@ -171,7 +171,7 @@ for ipaddress in homekit_ip_list:
 			value=int(value)
 
 		senddata={}
-		senddata["measurement"]=homekit_add_list[position][1]
+		senddata["measurement"]=homekit_add_list[position][1].lower()
 		senddata["tags"]={}
 		senddata["tags"]["source"]="HomeKit"
 		senddata["tags"]["host"]=homekit_add_list[position][0]
