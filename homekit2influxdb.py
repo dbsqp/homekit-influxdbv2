@@ -152,7 +152,7 @@ for ipaddress in homekit_ip_list:
 		
 		if sensorList[sensor] == "Temperature":
 			value=float(round(value,1))
-			senddata["fields"]["value"]=value
+			senddata["fields"]["temp"]=value
 		else:
 			value=int(value)
 			senddata["fields"]["percent"]=value
@@ -179,7 +179,7 @@ for ipaddress in homekit_ip_list:
 		senddata["tags"]["host"]=homekit_add_list[position][0]
 		senddata["tags"]["hardware"]=mac
 		senddata["fields"]={}
-		senddata["fields"]["value"]=value
+		senddata["fields"]["temp"]=value
 		if debug:
 			print ("INFLUX: "+influxdb2_bucket)
 			print (json.dumps(senddata,indent=4))
