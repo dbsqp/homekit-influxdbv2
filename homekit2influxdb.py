@@ -141,11 +141,6 @@ for ipaddress in homekit_ip_list:
 	# get sensor values
 	for sensor in [0,1]:
 		value=ds['accessories'][1]['services'][sensor+1]['characteristics'][0]['value']
-
-		if sensorList[sensor] == "Temperature":
-			value=float(round(value,1))
-		else:
-			value=int(value)
         	
 		senddata["measurement"]=sensorList[sensor].lower()
 #		senddata["time"]=time
@@ -154,13 +149,20 @@ for ipaddress in homekit_ip_list:
 		senddata["tags"]["host"]=host
 		senddata["tags"]["hardware"]=mac
 		senddata["fields"]={}
-		senddata["fields"]["value"]=value
+		
+		if sensorList[sensor] == "Temperature":
+			value=float(round(value,1))
+			senddata["fields"]["value"]=value
+		else:
+			value=int(value)
+			senddata["fields"]["percent"]=value
+		
 		if debug:
 			print ("INFLUX: "+influxdb2_bucket)
 			print (json.dumps(senddata,indent=4))
 		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
-	# do additional sensor
+	# do additional temperature sensors
 	if homekit_add_list[position] != "":
 		if debug:
 			print ("ADD: "+homekit_add_list[position][0]+" - "+homekit_add_list[position][1])
