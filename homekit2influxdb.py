@@ -175,7 +175,8 @@ for ipaddress in homekit_ip_list:
 		senddata={}
 		senddata["measurement"]=homekit_add_list[position][1].lower()
 		senddata["tags"]={}
-		senddata["tags"]["source"]="HomeKit"
+		senddata["tags"]["source"]="docker homekit-influxdbv2"
+		senddata["tags"]["origin"]="HomeKit"
 		senddata["tags"]["host"]=homekit_add_list[position][0]
 		senddata["tags"]["hardware"]=mac
 		senddata["fields"]={}
