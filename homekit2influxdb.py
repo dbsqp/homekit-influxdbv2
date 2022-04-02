@@ -41,12 +41,12 @@ else:
 
 # HomeKit envionment variables
 homekit_ip_list_str=os.getenv('HOMEKIT_IP_LIST', "")
-homekit_sensor_list_str=os.getenv('HOMEKIT_SENSOR_LIST', "")
+homekit_sensorName_list_str=os.getenv('HOMEKIT_SENSOR_LIST', "")
 homekit_mac_list_str=os.getenv('HOMEKIT_MAC_LIST', "")
 homekit_add_list_str=os.getenv('HOMEKIT_ADD_LIST', "")
 
 homekit_ip_list=eval(homekit_ip_list_str)
-homekit_sensor_list=eval(homekit_sensor_list_str)
+homekit_sensorName_list=eval(homekit_sensorName_list_str)
 homekit_mac_list=eval(homekit_mac_list_str)
 homekit_add_list=eval(homekit_add_list_str)
 
@@ -96,7 +96,7 @@ for ipaddress in homekit_ip_list:
 
 	# get host name
 	position = homekit_ip_list.index(ipaddress)
-	sensor=homekit_sensor_list[position]
+	sensorName=homekit_sensorName_list[position]
 	if debug:
 		print ("\nSensor: "+sensor+" - "+ipaddress)
 
@@ -147,7 +147,7 @@ for ipaddress in homekit_ip_list:
 		senddata["tags"]={}
 		senddata["tags"]["origin"]="HomeKit"
 		senddata["tags"]["source"]="docker homekit-influxdb2"
-		senddata["tags"]["sensor"]=sensor
+		senddata["tags"]["sensor"]=sensorName
 		senddata["tags"]["hardware"]=mac
 		senddata["fields"]={}
 		
