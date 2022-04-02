@@ -98,7 +98,7 @@ for ipaddress in homekit_ip_list:
 	position = homekit_ip_list.index(ipaddress)
 	sensorName=homekit_sensorName_list[position]
 	if debug:
-		print ("\nSensor: "+sensor+" - "+ipaddress)
+		print ("\nSensor: "+sensorName+" - "+ipaddress)
 
 	# test if host responde to ping
 	if pingTest(ipaddress):
