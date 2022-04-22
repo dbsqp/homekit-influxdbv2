@@ -1,5 +1,5 @@
 # homekit-influxdbv2
-Fetch data from LAN HomeKit accessories via REST API and push to influxdb v2 bucket.
+Docker image to fetch data from LAN HomeKit accessories via REST API and push to influxdb v2 bucket.
 
 ## HomeKit Accessories
 - Get IP address of temperature/humidity sensors
@@ -13,6 +13,7 @@ Fetch data from LAN HomeKit accessories via REST API and push to influxdb v2 buc
 Setup InfluxDBv2, create bucket and create a token with write permissions for bucket.
 
 ## Docker Setup
+https://hub.docker.com/repository/docker/dbsqp/homekit-influxdbv2
 ```
 $ docker run -d \
  -e HOMEKIT_IP_LIST="['<IP1>','<IP2>',...]" \
