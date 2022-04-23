@@ -152,10 +152,11 @@ for ipaddress in homekit_ip_list:
 		senddata["fields"]={}
 		
 		if sensorList[sensor] == "Temperature":
-			value=float(round(value,1))
+			value=float(round(value,2))
 			senddata["fields"]["temp"]=value
 		else:
-			value=int(value)
+#			value=int(value)
+			value=float(round(value,2))
 			senddata["fields"]["percent"]=value
 		
 		if debug:
