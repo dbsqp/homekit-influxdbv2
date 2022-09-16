@@ -67,12 +67,11 @@ else:
 influxdb2_ssl_verify_str=os.getenv('INFLUXDB2_SSL_VERIFY', "True")
 if influxdb2_ssl_verify_str is not None:
     influxdb2_ssl_verify = influxdb2_ssl_verify_str.lower() == "true"
-    influxdb2_ssl_verify_str="true"
 else:
     influxdb2_ssl_verify = False
-    influxdb2_ssl_verify_str="false"
 
 
+	
 # hard encoded envionment varables
 
 
@@ -88,13 +87,15 @@ else:
 	print ( "getmac: FALSE" )
 	
 if influxdb2_ssl:
-	print ( "  SSL: TRUE" )
+	print ( "   SSL: TRUE" )
 else:
-	print ( "  SSL: FALSE" )
+	print ( "   SSL: FALSE" )
 
 if influxdb2_ssl_verify:
+	influxdb2_ssl_verify_str="true"
 	print ( "verify: TRUE" )
 else:
+	influxdb2_ssl_verify_str="false"
 	print ( "verify: FALSE" )
 
 
