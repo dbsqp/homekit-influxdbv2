@@ -67,8 +67,11 @@ else:
 influxdb2_ssl_verify_str=os.getenv('INFLUXDB2_SSL_VERIFY', "True")
 if influxdb2_ssl_verify_str is not None:
     influxdb2_ssl_verify = influxdb2_ssl_verify_str.lower() == "true"
+    influxdb2_ssl_verify_str="true"
 else:
     influxdb2_ssl_verify = False
+    influxdb2_ssl_verify_str="false"
+
 
 # hard encoded envionment varables
 
@@ -83,8 +86,19 @@ if getmac:
 	print ( "getmac: TRUE" )
 else:
 	print ( "getmac: FALSE" )
+	
+if influxdb2_ssl:
+	print ( "  SSL: TRUE" )
+else:
+	print ( "  SSL: FALSE" )
+
+if influxdb2_ssl_verify:
+	print ( "verify: TRUE" )
+else:
+	print ( "verify: FALSE" )
 
 
+	
 # influxDBv2
 if influxdb2_ssl_str:
     influxdb2_url="https://" + influxdb2_host + ":" + str(influxdb2_port)
@@ -94,9 +108,9 @@ else:
 if debug:
 	print ( "influx: "+influxdb2_url )
 	print ( "bucket: "+influxdb2_bucket )
-	print ( "verify: "+influxdb2_ssl_verify )
+	print ( "verify: "+influxdb2_ssl_verify_str )
 
-client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify)
+client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify_str)
 write_api = client.write_api(write_options=SYNCHRONOUS)
 
 
@@ -178,7 +192,7 @@ for ipaddress in homekit_ip_list:
 		if debug:
 			print ("INFLUX: "+influxdb2_bucket)
 			print (json.dumps(senddata,indent=4))
-		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify, record=[senddata])
+		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
 	# do additional temperature sensors
 	if homekit_add_list[position] != "":
@@ -202,7 +216,7 @@ for ipaddress in homekit_ip_list:
 		if debug:
 			print ("INFLUX: "+influxdb2_bucket)
 			print (json.dumps(senddata,indent=4))
-		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify, record=[senddata])
+		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 	else:
 		if debug:
 			print ("ADD: NULL")
