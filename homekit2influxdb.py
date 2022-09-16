@@ -92,10 +92,8 @@ else:
 	print ( "   SSL: FALSE" )
 
 if influxdb2_ssl_verify:
-	influxdb2_ssl_verify_str="true"
 	print ( "verify: TRUE" )
 else:
-	influxdb2_ssl_verify_str="false"
 	print ( "verify: FALSE" )
 
 
@@ -109,9 +107,14 @@ else:
 if debug:
 	print ( "influx: "+influxdb2_url )
 	print ( "bucket: "+influxdb2_bucket )
-	print ( "verify: "+influxdb2_ssl_verify_str )
 
-client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify_str)
+if influxdb2_ssl_verify:
+	print ( "verify: True" )
+	client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=True)
+else:
+	print ( "verify: False" )
+	client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=False)
+
 write_api = client.write_api(write_options=SYNCHRONOUS)
 
 
