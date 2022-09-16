@@ -94,6 +94,7 @@ else:
 if debug:
 	print ( "influx: "+influxdb2_url )
 	print ( "bucket: "+influxdb2_bucket )
+	print ( "verify: "+influxdb2_ssl_verify )
 
 client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify)
 write_api = client.write_api(write_options=SYNCHRONOUS)
@@ -177,7 +178,7 @@ for ipaddress in homekit_ip_list:
 		if debug:
 			print ("INFLUX: "+influxdb2_bucket)
 			print (json.dumps(senddata,indent=4))
-		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
+		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify, record=[senddata])
 
 	# do additional temperature sensors
 	if homekit_add_list[position] != "":
@@ -201,7 +202,7 @@ for ipaddress in homekit_ip_list:
 		if debug:
 			print ("INFLUX: "+influxdb2_bucket)
 			print (json.dumps(senddata,indent=4))
-		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
+		write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify, record=[senddata])
 	else:
 		if debug:
 			print ("ADD: NULL")
